@@ -1,0 +1,16 @@
+build/
+
+*.o
+*.obj
+*.out
+
+*.dSYM/
+*.stackdump
+
+*.log
+
+.vscode/
+.idea/
+*.swp
+
+*.bin
