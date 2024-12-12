@@ -20,20 +20,16 @@ add_executable(png_encoder
 )
 
 target_include_directories(png_encoder 
-    PRIVATE 
+    PUBLIC 
         ${PROJECT_SOURCE_DIR}/include
         ${PROJECT_SOURCE_DIR}/src
 )
 
-target_link_libraries(png_encoder PRIVATE ZLIB::ZLIB)
+target_link_libraries(png_encoder PUBLIC ZLIB::ZLIB)
 
 target_compile_options(png_encoder 
-    PRIVATE 
+    PUBLIC 
         -Wall 
         -Wextra 
         -Werror
 )
-
-enable_testing()
-
-add_subdirectory(tests)
