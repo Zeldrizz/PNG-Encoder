@@ -1,4 +1,4 @@
-# Проект "PNG Encoding"
+# Проект "PNG Encoder"
 
 ## Задача
 
