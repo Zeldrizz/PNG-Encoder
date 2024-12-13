@@ -1,42 +1,34 @@
-cmake_minimum_required(VERSION 3.10)
+include(FetchContent)
 
-project(PNG_Encoding VERSION 1.0 LANGUAGES CXX)
-
-set(CMAKE_CXX_STANDARD 20)
-set(CMAKE_CXX_STANDARD_REQUIRED True)
-
-find_package(ZLIB REQUIRED)
-
-option(BUILD_TESTS "Build tests" OFF)
-
-add_executable(png_encoder
-    src/main.cpp
-    src/image_loader.cpp
-    src/filter.cpp
-    src/deflate.cpp
-    src/png_writer.cpp
-    include/image_loader.h
-    include/filter.h
-    include/deflate.h
-    include/png_writer.h
+FetchContent_Declare(
+    googletest
+    GIT_REPOSITORY https://github.com/google/googletest.git
+    GIT_TAG release-1.12.1
 )
 
-target_include_directories(png_encoder 
+set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
+
+FetchContent_MakeAvailable(googletest)
+
+add_executable(png_encoder_tests
+    test_image_loader.cpp
+    test_filter.cpp
+    test_deflate.cpp
+    test_png_writer.cpp
+)
+
+target_include_directories(png_encoder_tests 
     PUBLIC 
         ${PROJECT_SOURCE_DIR}/include
         ${PROJECT_SOURCE_DIR}/src
 )
 
-target_link_libraries(png_encoder PUBLIC ZLIB::ZLIB)
-
-target_compile_options(png_encoder 
-    PUBLIC 
-        -Wall 
-        -Wextra 
-        -Werror
+target_link_libraries(png_encoder_tests 
+    PRIVATE 
+        gtest_main
+        png_encoder_lib
+        ZLIB::ZLIB
 )
 
-if(BUILD_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
-endif()
+include(GoogleTest)
+gtest_discover_tests(png_encoder_tests)

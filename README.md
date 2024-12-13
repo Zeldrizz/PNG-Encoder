@@ -63,4 +63,4 @@
 - [Подробности о PNG: фильтрация и компрессия (Habr)](https://habr.com/ru/companies/ruvds/articles/787302/)
 - [ZLIB: Документация](https://www.zlib.net/manual.html)
 - [DEFLATE: Алгоритм сжатия](https://en.wikipedia.org/wiki/Deflate)
-- [Catch2: Библиотека тестирования](https://github.com/catchorg/Catch2)
+- [GoogleTest: Библиотека тестирования](https://github.com/google/googletest.git)
