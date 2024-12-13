@@ -13,7 +13,7 @@ enum class PNGFilterType {
 
 class PNGFilter {
 public:
-    std::vector<uint8_t> Apply(const std::vector<uint8_t>& rgb_data, uint64_t width, uint64_t height);
+    static std::vector<uint8_t> Apply(const std::vector<uint8_t>& rgb_data, uint64_t width, uint64_t height);
 private:
-    uint8_t PaethPredictor(uint8_t a, uint8_t b, uint8_t c);
+    static uint8_t PaethPredictor(uint8_t a, uint8_t b, uint8_t c);
 };
