@@ -1,7 +1,9 @@
-#include <cstdint>
-#include <iostream>
 #include "../include/image_loader.h"
 #include "../include/filter.h"
+#include "../include/deflate.h"
+
+#include <cstdint>
+#include <iostream>
 
 int main(int argc, char* argv[]) {
     if (argc < 5) {
@@ -17,6 +19,7 @@ int main(int argc, char* argv[]) {
     try {
         RawImage image = ImageLoader::LoadRawImage(input_file, width, height);
         auto filtered_data = PNGFilter::Apply(image.data, image.width, image.height);
+        auto compressed_data = DeflateCompressor::Compress(filtered_data);
     } catch (const std::exception& ex) {
         std::cerr << "Error: " << ex.what() << std::endl;
         return 1;

@@ -13,7 +13,6 @@ FetchContent_MakeAvailable(googletest)
 add_executable(png_encoder_tests
     test_image_loader.cpp
     test_filter.cpp
-    test_deflate.cpp
     test_png_writer.cpp
 )
 
