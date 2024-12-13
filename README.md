@@ -50,3 +50,17 @@
 - Создать полноценное приложение, способное конвертировать сырые изображения в формат PNG.
 - Обеспечить корректную работу приложения на различных тестовых изображениях.
 - Получить практический опыт разработки программного обеспечения, взаимодействующего с системными ресурсами и файловой системой.
+
+## Использование
+```bash
+./png_encoder input.raw output.png width height [optional] filter
+```
+
+## Источники
+
+- [PNG: Filtering](https://en.wikipedia.org/wiki/PNG#Filtering)
+- [Глубокое погружение в PNG (Habr)](https://habr.com/ru/articles/130472/)
+- [Подробности о PNG: фильтрация и компрессия (Habr)](https://habr.com/ru/companies/ruvds/articles/787302/)
+- [ZLIB: Документация](https://www.zlib.net/manual.html)
+- [DEFLATE: Алгоритм сжатия](https://en.wikipedia.org/wiki/Deflate)
+- [Catch2: Библиотека тестирования](https://github.com/catchorg/Catch2)
