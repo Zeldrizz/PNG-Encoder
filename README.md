@@ -68,9 +68,11 @@ cd build
 
 ## Частный пример использования
 ```bash
-python3 generate_raw_from_png.py examples/png/test5-1280x720.png examples/raw/test5-1280x720.raw // можно свой png преобразовать в несжатый HxWx3 raw формат
+python3 generate_raw_from_png.py examples/png/test5-1280x720.png examples/raw/test5-1280x720.raw 
+// можно свой png преобразовать в несжатый HxWx3 raw формат
 cd build
-./png_encoder ../examples/raw/test5-1280x720.raw ../result.png 1280 720 // получаем result.png, который точь в точь как исходный png
+./png_encoder ../examples/raw/test5-1280x720.raw ../result.png 1280 720 
+// получаем result.png, который точь в точь как исходный png
 ```
 
 ## Источники
