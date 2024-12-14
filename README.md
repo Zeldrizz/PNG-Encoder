@@ -51,11 +51,6 @@
 - Обеспечить корректную работу приложения на различных тестовых изображениях.
 - Получить практический опыт разработки программного обеспечения, взаимодействующего с системными ресурсами и файловой системой.
 
-## Использование
-```bash
-./png_encoder input.raw output.png width height [optional] filter
-```
-
 ## Сборка
 ```bash
 mkdir build
@@ -63,6 +58,19 @@ cd build
 cmake ..
 make
 ctest
+```
+
+## Использование
+```bash
+cd build
+./png_encoder input.raw output.png width height [optional] filter
+```
+
+## Частный пример использования
+```bash
+python3 generate_raw_from_png.py examples/png/test5-1280x720.png examples/raw/test5-1280x720.raw // можно свой png преобразовать в несжатый HxWx3 raw формат
+cd build
+./png_encoder ../examples/raw/test5-1280x720.raw ../result.png 1280 720 // получаем result.png, который точь в точь как исходный png
 ```
 
 ## Источники
