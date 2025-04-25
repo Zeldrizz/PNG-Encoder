@@ -18,3 +18,5 @@ build/
 .clang-format
 
 .cache/
+
+*.txt
