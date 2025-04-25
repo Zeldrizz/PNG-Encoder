@@ -1,3 +1,4 @@
+// main.cpp
 #include "../include/image_loader.h"
 #include "../include/filter.h"
 #include "../include/deflate.h"

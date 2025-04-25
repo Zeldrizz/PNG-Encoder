@@ -1,3 +1,4 @@
+// test_image_loader.cpp
 #include <gtest/gtest.h>
 #include "image_loader.h"
 #include <cstdint>
