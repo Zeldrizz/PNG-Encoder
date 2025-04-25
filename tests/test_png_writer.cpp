@@ -43,13 +43,13 @@ TEST(PNGWriterTest, WritesMinimalPNG) {
     std::ifstream in(file_name, std::ios::binary);
     ASSERT_TRUE(in) << "File wasn't created!";
 
-    // Check PNG signature 
+    // Check PNG signature
     std::vector<uint8_t> buffer;
     ASSERT_TRUE(ReadBytes(in, buffer, 8));
     const uint8_t ref_sig[8] = {0x89, 'P', 'N', 'G', '\r', '\n', 0x1A, '\n'};
     EXPECT_EQ(std::vector<uint8_t>(ref_sig, ref_sig + 8), buffer);
 
-    // Check IHDR chunk: length=13, type="IHDR", verify fields 
+    // Check IHDR chunk: length=13, type="IHDR", verify fields
     ASSERT_TRUE(ReadBytes(in, buffer, 4 + 4 + 13 + 4));  // length + type + data + CRC
     EXPECT_EQ(ReadBE32(buffer.data()), 13u);
     EXPECT_EQ(std::string(reinterpret_cast<char*>(buffer.data() + 4), 4), "IHDR");
@@ -59,7 +59,7 @@ TEST(PNGWriterTest, WritesMinimalPNG) {
     EXPECT_EQ(ihdr[8], 8);  // bit depth = 8
     EXPECT_EQ(ihdr[9], 2);  // color type = 2 (Truecolor)
 
-    // Check IDAT chunk header: length matches compressed size, type="IDAT" 
+    // Check IDAT chunk header: length matches compressed size, type="IDAT"
     ASSERT_TRUE(ReadBytes(in, buffer, 4));
     EXPECT_EQ(ReadBE32(buffer.data()), compressed.size());
     ASSERT_TRUE(ReadBytes(in, buffer, 4));
@@ -67,7 +67,7 @@ TEST(PNGWriterTest, WritesMinimalPNG) {
     // skip IDAT data + CRC
     in.seekg(compressed.size() + 4, std::ios::cur);
 
-    // Check IEND chunk: zero-length data, type="IEND" 
+    // Check IEND chunk: zero-length data, type="IEND"
     ASSERT_TRUE(ReadBytes(in, buffer, 12));
     EXPECT_EQ(ReadBE32(buffer.data()), 0u);
     EXPECT_EQ(std::string(reinterpret_cast<char*>(buffer.data() + 4), 4), "IEND");
