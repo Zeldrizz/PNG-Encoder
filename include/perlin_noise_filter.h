@@ -5,5 +5,5 @@
 
 struct PerlinNoiseFilter {
     static void Apply(std::vector<uint8_t>& rgb_data, uint64_t width, uint64_t height,
-                      float noise_scale = -1.f);
+                      float percent = 0.f);
 };
