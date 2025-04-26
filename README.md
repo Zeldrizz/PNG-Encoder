@@ -16,31 +16,6 @@
 
 Проект рассчитан на 1 человека.
 
-## Функционал
-
-1. **Чтение исходного изображения:**
-   - Прием входных данных в виде массива HxWx3 с RGB-компонентами (.raw файл)
-   
-2. **Предварительная обработка:**
-   - Применение фильтра PAETH для улучшения сжатия.
-   
-3. **Сжатие данных:**
-   - Использование алгоритма DEFLATE из ZLIB для сжатия пиксельных данных.
-   
-4. **Формирование PNG-файла:**
-   - Создание необходимых блоков PNG (IHDR, IDAT, IEND и т.д.)
-   - Корректное объединение и структурирование блоков согласно спецификации PNG.
-   
-5. **Сохранение файла:**
-   - Запись сжатых данных в файл с расширением .png.
-   
-6. **Тестирование:**
-   - Проверка корректности созданных PNG-файлов.
-   - Оптимизация производительности и качества сжатия.
-
-7. **Применение цветовых фильтров:**
-   - Применение цветовых фильтров (по типу Grayscale, Negative) к изображению.
-
 ## Цели проекта
 
 - Изучить структуру формата PNG и понять принципы его работы.
@@ -51,28 +26,80 @@
 - Обеспечить корректную работу приложения на различных тестовых изображениях.
 - Получить практический опыт разработки программного обеспечения, взаимодействующего с системными ресурсами и файловой системой.
 
+## Функционал
+
+1. **Загрузка RAW-изображения**
+   `ImageLoader::LoadRawImage(const std::string &path, uint64_t width, uint64_t height)` — читает файл `.raw` и заполняет `RawImage::data` длиной `width * height * 3`.
+
+2. **Цветовые фильтры**
+   - `NegativeFilter::Apply(std::vector<uint8_t> &rgb_data)` — инверсия значений (255 − v)
+   - `GrayscaleFilter::Apply(std::vector<uint8_t> &rgb_data)` — преобразование по формуле Y = 0.299 × R + 0.587 × G + 0.114 × B
+   - `PerlinNoiseFilter::Apply(std::vector<uint8_t> &rgb_data, uint64_t width, uint64_t height, float percent)` — шум Перлина с интенсивностью percent (0–100)
+
+3. **PNG-фильтрация**  
+   `PNGFilter::Apply(const std::vector<uint8_t> &rgb_data, uint64_t width, uint64_t height)` — возвращает вектор скан-лайнов, где каждая строка начинается с байта фильтра Paeth.
+
+4. **Сжатие**
+   `DeflateCompressor::Compress(const std::vector<uint8_t> &data)` — сжимает переданные скан-лайны с помощью ZLIB (режим Z_BEST_COMPRESSION).
+
+5. **Формирование PNG**
+   `PNGWriter::WritePNG(const std::string &filename, uint64_t width, uint64_t height, const std::vector<uint8_t> &compressed_data)` — пишет сигнатуру, чанки IHDR, IDAT, IEND и рассчитывает CRC.
+
+6. **Тесты**
+   - `test_image_loader.cpp`
+   - `test_filter.cpp`
+   - `test_png_writer.cpp`
+   - `test_color_filters.cpp`  
+   Запуск: `ctest --output-on-failure`
+
+7. **Утилиты**
+   - `generate_raw_from_png.py` — конвертация PNG -> RAW
+   - `micro-benchmark.py` — сравнение скорости конвертации и размера выходного файла с Pillow/OpenCV
+
+## Зависимости
+
+- **C++20** (GCC 10+ или Clang 10+)
+- **CMake ≥ 3.14**
+- **ZLIB** (dev-пакет)
+- **Python 3.6+** (для утилит):
+  ```bash
+  pip install Pillow
+  # опционально для бенчмарка:
+  pip install opencv-python
+   ```
+
 ## Сборка
 ```bash
-mkdir build
-cd build
+git clone <repo_url>
+cd PNG-Encoder
+mkdir build && cd build
 cmake ..
 make
-ctest
+ctest --output-on-failure
 ```
 
 ## Использование
 ```bash
 cd build
-./png_encoder input.raw output.png width height [optional] filter
+
+# базовая конвертация RAW -> PNG
+./png_encoder input.raw output.png width height
+
+# с цветовым фильтром: none | negative | grayscale
+./png_encoder input.raw output.png width height negative
+
+# с шумом Перлина (0-100)
+./png_encoder input.raw output.png width height perlin 75
 ```
 
-## Частный пример использования
+## Генерация RAW из PNG
 ```bash
-python3 generate_raw_from_png.py examples/png/test5-1280x720.png examples/raw/test5-1280x720.raw 
-// можно свой png преобразовать в несжатый HxWx3 raw формат
-cd build
-./png_encoder ../examples/raw/test5-1280x720.raw ../result.png 1280 720 
-// получаем result.png, который точь в точь как исходный png
+python3 generate_raw_from_png.py examples/png/test5-1280x720.png examples/raw/test5-1280x720.raw
+```
+
+## Бенчмарки
+```bash
+python3 micro-benchmark.py
 ```
 
 ## Источники
