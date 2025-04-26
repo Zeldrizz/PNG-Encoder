@@ -1,3 +1,4 @@
+# generate_raw_from_png.py
 import sys
 from PIL import Image
 
