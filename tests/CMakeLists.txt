@@ -14,6 +14,7 @@ add_executable(png_encoder_tests
     test_image_loader.cpp
     test_filter.cpp
     test_png_writer.cpp
+    test_color_filter.cpp
 )
 
 target_include_directories(png_encoder_tests 
