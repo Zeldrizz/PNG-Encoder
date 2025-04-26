@@ -10,6 +10,10 @@ find_package(ZLIB REQUIRED)
 add_library(png_encoder_lib
     src/image_loader.cpp
     src/filter.cpp
+    src/color_filter.cpp
+    src/negative_filter.cpp
+    src/grayscale_filter.cpp
+    src/perlin_noise_filter.cpp
     src/deflate.cpp
     src/png_writer.cpp
 )
